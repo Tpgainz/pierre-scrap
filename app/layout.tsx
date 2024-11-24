@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <main className="h-screen grid bg-secondary grid-cols-2 md:grid-cols-3 p-2 gap-4">
           <div className="col-span-2 md:col-span-1 ">
-            <Suspense fallback={<div>Loading...</div>}> 
+            <Suspense fallback={<div>Loading RootLayout</div>}> 
               <MapContainer />
             </Suspense>
           </div>
