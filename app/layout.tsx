@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import MapContainer from "../components/map/MapContainer";
-
+import { Suspense } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,7 +20,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <main className="h-screen grid bg-secondary grid-cols-2 md:grid-cols-3 p-2 gap-4">
           <div className="col-span-2 md:col-span-1 ">
-            <MapContainer />
+            <Suspense fallback={<div>Loading...</div>}> 
+              <MapContainer />
+            </Suspense>
           </div>
           <div className="col-span-2 md:col-span-2">{children}</div>
         </main>
