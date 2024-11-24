@@ -33,7 +33,7 @@ const statusVariants = {
   [Status.NOT_FOUND]: { variant: "redOutline", color: "red" },
 } as const;
 
-export const RequestInfos: React.FC<RequestInfosProps> = React.memo((props) => {
+const RequestInfos: React.FC<RequestInfosProps> = React.memo((props) => {
   return (
     <TooltipProvider>
       <Tooltip>
@@ -76,3 +76,7 @@ export const RequestInfos: React.FC<RequestInfosProps> = React.memo((props) => {
     </TooltipProvider>
   );
 });
+
+RequestInfos.displayName = "RequestInfos";
+
+export { RequestInfos };
