@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ReqParams } from "../lib/getters/getAllCloses";
+import { ReqParams } from "../lib/getAllCloses";
 import {
   Card,
   CardContent,
@@ -147,18 +147,7 @@ function RecursiveInput({
       </Card>
     );
   }
-  return typeof value === "boolean" ? (
-    <Checkbox
-      checked={value}
-      onCheckedChange={(checked) => updateQueryParams(path, checked)}
-    />
-  ) : typeof value === "number" ? (
-    <Input
-      type="number"
-      value={value ?? ""}
-      onChange={(e) => updateQueryParams(path, Number(e.target.value))}
-    />
-  ) : path[path.length - 1] === "language" ? (
+  return typeof value === "string" && path[path.length - 1] === "language" ? (
     <Select
       value={value ?? ""}
       onValueChange={(value) => updateQueryParams(path, value)}
@@ -174,7 +163,7 @@ function RecursiveInput({
         ))}
       </SelectContent>
     </Select>
-  ) : path[path.length - 1] === "rankby" ? (
+  ) : path[path.length - 1] === "rankby" && typeof value === "string" ? (
     <Select
       value={value ?? ""}
       onValueChange={(value) => updateQueryParams(path, value)}
@@ -190,6 +179,11 @@ function RecursiveInput({
         ))}
       </SelectContent>
     </Select>
+  ) : typeof value === "boolean" ? (
+    <Checkbox
+      checked={value}
+      onCheckedChange={(checked) => updateQueryParams(path, checked)}
+    />
   ) : (
     <Input
       type="text"

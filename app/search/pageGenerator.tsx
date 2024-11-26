@@ -21,7 +21,12 @@ export default function AsyncPageResults({ generator }: AsyncPageResultsProps) {
         for await (const page of generator) {
           if (!isMounted) break;
 
-          setPages((prevPages) => [...prevPages, page]);
+          setPages((prevPages) => {
+            if (prevPages.some((p) => p.pageNumber === page.pageNumber)) {
+              return prevPages;
+            }
+            return [...prevPages, page];
+          });
 
           // Side effect <3
           await new Promise((resolve) => setTimeout(resolve, 0));
@@ -45,24 +50,20 @@ export default function AsyncPageResults({ generator }: AsyncPageResultsProps) {
     return <div className="text-red-500">{error}</div>;
   }
 
-  return (
-    <>
-      {pages.map((page, index) => (
-        <div key={`page-${index}`}>
-          <RenderPage
-            results={page.singleLocation}
-            title={`Page ${page.pageNumber} (${page.singleLocation.length} résultats)`}
-          >
-            <RequestInfos
-              status={page.status}
-              statusText={page.statusText}
-              resStatus={page.resStatus || Status.INVALID_REQUEST}
-              hasNextPage={!!page.next_page_token}
-              errorMessage={page.error_message}
-            />
-          </RenderPage>
-        </div>
-      ))}
-    </>
-  );
+  return pages.map((page, index) => (
+    <div key={`page-${index}`}>
+      <RenderPage
+        results={page.singleLocation}
+        title={`Page ${page.pageNumber} (${page.singleLocation.length} résultats)`}
+      >
+        <RequestInfos
+          status={page.status}
+          statusText={page.statusText}
+          resStatus={page.resStatus || Status.INVALID_REQUEST}
+          hasNextPage={!!page.next_page_token}
+          errorMessage={page.error_message}
+        />
+      </RenderPage>
+    </div>
+  ));
 }

@@ -1,4 +1,3 @@
 # Pierre-Scrap
 
-Une application Next.js pour rechercher et filtrer les commerces avec des numéros de téléphone mobiles en France.
-
+Google maps api based app with next.js and shadcn/ui
